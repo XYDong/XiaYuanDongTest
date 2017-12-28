@@ -4,9 +4,9 @@
     package="xyd.com.xiayuandongtest">
 
     <!-- SDCard中创建与删除文件权限 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <!-- 向SDCard写入数据权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".application.XydApplication"
@@ -28,16 +28,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.Test1Activity"
-            android:launchMode="singleTask"
-            android:taskAffinity="com.xyd.test"
+        <activity
+            android:name=".activity.Test1Activity"
             android:configChanges="screenLayout"
-            android:process=":remote"/>
-        <activity android:name=".activity.Test2Activity"
             android:launchMode="singleTask"
-            android:taskAffinity="com.xyd.test"
+            android:process=":remote"
+            android:taskAffinity="com.xyd.test" />
+        <activity
+            android:name=".activity.Test2Activity"
             android:configChanges="screenLayout"
-            android:process="com.xyd.chapter_2.remote"></activity>
+            android:launchMode="singleTask"
+            android:process="com.xyd.chapter_2.remote"
+            android:taskAffinity="com.xyd.test" />
+
+        <service
+            android:name=".services.MessengerService"
+            android:process=":remote" />
+        <service
+            android:name=".services.BookManagerService"
+            android:process=":remote" />
+
+        <activity android:name=".activity.BookManagerActivity"></activity>
     </application>
 
 </manifest>

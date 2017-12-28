@@ -18,4 +18,9 @@ public class Constants {
     public static final String TEST_FILE_1 = PATH + "/xyd/chapter_2/";
     public static final String CACHE_FILE_PATH = TEST_FILE_1 + "usercache";
 
+    public static final int MSG_FROM_CLIEN = 0X10010;
+    public static final int MSG_FROM_SERVICE = 0X10011;
+
+
+
 }

@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyd.com.xiayuandongtest.R;
 import xyd.com.xiayuandongtest.entity.User;
+import xyd.com.xiayuandongtest.entity.User2;
 import xyd.com.xiayuandongtest.test.UserManager;
 import xyd.com.xiayuandongtest.utils.LogUtils;
 import xyd.com.xiayuandongtest.utils.MyUtils;
@@ -28,7 +29,7 @@ public class Test1Activity extends AppCompatActivity {
     TextView textView2;
     @BindView(R.id.btn_start_test2)
     Button btnStartTest2;
-    private User user;
+    private User2 user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class Test1Activity extends AppCompatActivity {
 
                 try {
                     inputStream = new ObjectInputStream(new FileInputStream(file));
-                    user = (User)inputStream.readObject();
+                    user = (User2)inputStream.readObject();
                     LogUtils.i("recoverFromFile user=="+user);
                 } catch (Exception e) {
                     e.printStackTrace();

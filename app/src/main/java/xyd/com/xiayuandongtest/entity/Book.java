@@ -4,12 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * 描述：
- * 作者：shuiq_000
- * 邮箱：2028318192@qq.com
- *
- * @version 1.0
- * @time: 2017/12/11 22:16
+ * Created by Administrator on 2017/12/25.
  */
 
 public class Book implements Parcelable {
@@ -18,7 +13,13 @@ public class Book implements Parcelable {
     private String author;
 
 
-    protected Book(Parcel in) {
+    public Book(int id, String bookName, String author) {
+        this.id = id;
+        this.bookName = bookName;
+        this.author = author;
+    }
+
+    public Book(Parcel in) {
         id = in.readInt();
         bookName = in.readString();
         author = in.readString();
@@ -47,4 +48,14 @@ public class Book implements Parcelable {
         dest.writeString(bookName);
         dest.writeString(author);
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", bookName='" + bookName + '\'' +
+                ", author='" + author + '\'' +
+                '}';
+    }
 }
+

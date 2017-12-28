@@ -1,9 +1,17 @@
 package xyd.com.xiayuandongtest.activity;
 
 import android.Manifest;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -22,12 +30,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyd.com.xiayuandongtest.R;
-import xyd.com.xiayuandongtest.entity.User;
+import xyd.com.xiayuandongtest.entity.User2;
+import xyd.com.xiayuandongtest.services.MessengerService;
 import xyd.com.xiayuandongtest.test.UserManager;
 import xyd.com.xiayuandongtest.utils.LogUtils;
 import xyd.com.xiayuandongtest.utils.MyUtils;
 
 import static xyd.com.xiayuandongtest.utils.Constants.CACHE_FILE_PATH;
+import static xyd.com.xiayuandongtest.utils.Constants.MSG_FROM_CLIEN;
+import static xyd.com.xiayuandongtest.utils.Constants.MSG_FROM_SERVICE;
 import static xyd.com.xiayuandongtest.utils.Constants.TEST_FILE_1;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +48,51 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btn_repeat)
     Button btnRepeat;
     public static final String TAG = "xyd.mainactivity";
+    @BindView(R.id.btn_bookmanager_activity)
+    Button btnBookmanagerActivity;
+
+
+    private Messenger mServie;
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mServie = new Messenger(service);
+            Message msg = Message.obtain(null, MSG_FROM_CLIEN);
+            Bundle bundle = new Bundle();
+            bundle.putString("msg", "hello,this is client.");
+            msg.setData(bundle);
+            msg.replyTo = messenger;
+            try {
+                mServie.send(msg);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
+
+    private Messenger messenger = new Messenger(new MyMainHanler());
+
+    class MyMainHanler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_FROM_SERVICE:
+                    LogUtils.i(msg.getData().getString("reply"));
+                    break;
+                default:
+                    super.handleMessage(msg);
+            }
+            super.handleMessage(msg);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         LogUtils.i("MainActivity+onCreate");
         UserManager.sUserId = 2;
-        LogUtils.i("MainActivity+UserManager.sUerId=="+ UserManager.sUserId);
+        LogUtils.i("MainActivity+UserManager.sUerId==" + UserManager.sUserId);
+        Intent intent = new Intent(this, MessengerService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
     }
 
@@ -63,11 +121,11 @@ public class MainActivity extends AppCompatActivity {
         // 申请录音权限
         AndPermission.with(this)
                 .requestCode(200)
-                .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission_group.STORAGE)
+                .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .callback(new PermissionListener() {
                     @Override
                     public void onSucceed(int requestCode, @NonNull List<String> grantPermissions) {
-                        if(requestCode == 200){
+                        if (requestCode == 200) {
                             persist2File();
                         }
                     }
@@ -87,13 +145,13 @@ public class MainActivity extends AppCompatActivity {
                 .start();
     }
 
-    public void persist2File(){
+    public void persist2File() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                User user = new User(1,"hello world ",false);
+                User2 user = new User2(1, "hello world ", false);
                 File dir = new File(TEST_FILE_1);
-                if(dir == null){
+                if (!dir.exists()) {
                     dir.mkdirs();
                 }
                 File cachedFile = new File(CACHE_FILE_PATH);
@@ -101,11 +159,11 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     objectOutputStream = new ObjectOutputStream(new FileOutputStream(cachedFile));
                     objectOutputStream.writeObject(user);
-                    LogUtils.i("persist user=="+user);
+                    LogUtils.i("persist user==" + user);
                     objectOutputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                }finally {
+                } finally {
                     MyUtils.closeOutIO(objectOutputStream);
                 }
 
@@ -113,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
-
 
 
     @Override
@@ -124,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        unbindService(mConnection);
         super.onDestroy();
         LogUtils.i("MainActivity+onDestroy");
 
@@ -143,14 +201,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.btn_2_test1,R.id.btn_repeat})
+    @OnClick({R.id.btn_2_test1, R.id.btn_repeat,R.id.btn_bookmanager_activity})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_2_test1:
                 startActivity(new Intent(this, Test1Activity.class));
                 break;
             case R.id.btn_repeat:
-                startActivity(new Intent(this,MainActivity.class));
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+            case R.id.btn_bookmanager_activity:
+                startActivity(new Intent(this, BookManagerActivity.class));
                 break;
 
         }

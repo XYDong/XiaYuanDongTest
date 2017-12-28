@@ -17,7 +17,7 @@ public class User implements Parcelable {
     private String name;
     private  boolean isMale;
 
-    private Book book;
+//    private Book book;
 
     public User(int id, String name, boolean isMale) {
         this.id = id;
@@ -79,6 +79,6 @@ public class User implements Parcelable {
         dest.writeInt(id);
         dest.writeString(name);
         dest.writeByte((byte) (isMale ? 1 : 0));
-        dest.writeParcelable(book,0);
+//        dest.writeParcelable(book,0);
     }
 }
