@@ -1,11 +1,15 @@
 package xyd.com.xiayuandongtest.services;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -24,47 +28,54 @@ public class BookManagerService extends Service {
 
     public static final String TAG = "BMS";
 
-  private   CopyOnWriteArrayList<Book> mBookList = new CopyOnWriteArrayList<Book>();
+    RemoteCallbackList<IOnNewBookArrivedListener> listeners = new RemoteCallbackList<>();
 
-  private AtomicBoolean mIsServiceDestoryed = new AtomicBoolean(false);
-  private CopyOnWriteArrayList<IOnNewBookArrivedListener> listeners = new CopyOnWriteArrayList<>();
+    private   CopyOnWriteArrayList<Book> mBookList = new CopyOnWriteArrayList<Book>();
 
-  private Binder mBinder = new IBookManager.Stub() {
-      @Override
-      public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
+    private AtomicBoolean mIsServiceDestoryed = new AtomicBoolean(false);
+//    private CopyOnWriteArrayList<IOnNewBookArrivedListener> listeners = new CopyOnWriteArrayList<>();
 
-      }
+    private Binder mBinder = new IBookManager.Stub() {
+        @Override
+        public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
 
-      @Override
-      public List<Book> getListBook() throws RemoteException {
-          return mBookList;
-      }
+        }
 
-      @Override
-      public void addBook(Book book) throws RemoteException {
+        @Override
+        public List<Book> getListBook() throws RemoteException {
+            return mBookList;
+        }
+
+        @Override
+        public void addBook(Book book) throws RemoteException {
             mBookList.add(book);
-      }
+        }
 
-      @Override
-      public void registerListener(IOnNewBookArrivedListener listener) throws RemoteException {
-          if(!listeners.contains(listener)){
-              listeners.add(listener);
-          }else
-              LogUtils.i("registerListener,size:"+listeners.size());
+        @SuppressLint("NewApi")
+        @Override
+        public void registerListener(IOnNewBookArrivedListener listener) throws RemoteException {
+            listeners.register(listener);
+            LogUtils.d("ungisterListener, current size:"+listeners.getRegisteredCallbackCount());
 
-          LogUtils.d("ungisterListener, current size:"+listeners.size());
 
-      }
+          /*  if(!listeners.contains(listener)){
+                listeners.add(listener);
+            }else
+                LogUtils.i("registerListener,size:"+listeners.size());
 
-      @Override
-      public void unregisterListener(IOnNewBookArrivedListener listener) throws RemoteException {
-        if(listeners.contains(listener)){
-            listeners.remove(listener);
-            LogUtils.i("unregister listener succesed.");
-        }else
-            LogUtils.i("not found , can not unregister");
-      }
-  };
+            LogUtils.d("ungisterListener, current size:"+listeners.size());*/
+
+        }
+
+        @Override
+        public void unregisterListener(IOnNewBookArrivedListener listener) throws RemoteException {
+            if(listeners.unregister(listener)){
+//                listeners.remove(listener);
+                LogUtils.i("unregister listener succesed.");
+            }else
+                LogUtils.i("not found , can not unregister");
+        }
+    };
 
     @Override
     public void onCreate() {
@@ -111,11 +122,12 @@ public class BookManagerService extends Service {
      * 有新书添加
      * @param book
      */
+    @SuppressLint("NewApi")
     private void onNewBookArrived(Book book) throws Exception{
         mBookList.add(book);
-        LogUtils.i("onNewBookArrived,notify listener:"+listeners.size());
-        for (int i = 0; i < listeners.size(); i++) {
-            IOnNewBookArrivedListener listener = listeners.get(i);
+        LogUtils.i("onNewBookArrived,notify listener:"+listeners.getRegisteredCallbackCount());
+        for (int i = 0; i < listeners.getRegisteredCallbackCount(); i++) {
+            IOnNewBookArrivedListener listener = listeners.getBroadcastItem(i);
             LogUtils.d("onNewBookArrived, notify listener:"+listener);
             listener.onNewBookArrived(book);
         }

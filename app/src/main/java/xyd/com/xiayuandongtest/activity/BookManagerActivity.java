@@ -31,6 +31,23 @@ public class BookManagerActivity extends Activity {
 
     private IBookManager iBookManager;
 
+    /**
+     * binder 死亡代理
+     */
+    private IBinder.DeathRecipient deathRecipient = new IBinder.DeathRecipient() {
+        @Override
+        public void binderDied() {
+            if(iBookManager == null){
+                return;
+            }else {
+                iBookManager.asBinder().unlinkToDeath(deathRecipient,0);
+                iBookManager = null;
+                //重新绑定远程service
+                LogUtils.i("DeathRecipient，service Disconnected");
+            }
+        }
+    };
+
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
         @Override
@@ -41,8 +58,8 @@ public class BookManagerActivity extends Activity {
                     LogUtils.i("receive new book : " + msg.obj);
 
                     break;
-                    default:
-                        super.handleMessage(msg);
+                default:
+                    super.handleMessage(msg);
             }
 
         }
@@ -52,7 +69,12 @@ public class BookManagerActivity extends Activity {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             iBookManager = IBookManager.Stub.asInterface(service);
-
+            IBookManager.Stub.asInterface(service);
+            try {
+                service.linkToDeath(deathRecipient,0);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             try {
                 List<Book> listBook = iBookManager.getListBook();
                 LogUtils.i("query book list, list type:"+listBook.getClass().getCanonicalName());
@@ -73,10 +95,9 @@ public class BookManagerActivity extends Activity {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            if(iBookManager != null){
-                iBookManager = null;
-                LogUtils.e("binder died.");
-            }
+
+            iBookManager = null;
+            LogUtils.e("binder died.");
         }
     };
 
