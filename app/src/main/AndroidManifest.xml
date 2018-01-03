@@ -8,6 +8,10 @@
     <!-- 向SDCard写入数据权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <permission
+        android:name="xyd.com.PROVIDER"
+        android:protectionLevel="normal" />
+
     <application
         android:name=".application.XydApplication"
         android:allowBackup="true"
@@ -48,7 +52,16 @@
             android:name=".services.BookManagerService"
             android:process=":remote" />
 
-        <activity android:name=".activity.BookManagerActivity"></activity>
+        <activity android:name=".activity.BookManagerActivity" />
+
+        <provider
+            android:name=".providers.BookProvider"
+            android:authorities="xyd.com.xiayuandongtest.providers"
+            android:permission="xyd.com.PROVIDER"
+            android:process=":provider" />
+
+        <activity android:name=".activity.ProviderActivity"
+                  android:launchMode="singleTask"/>
     </application>
 
 </manifest>
