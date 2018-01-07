@@ -25,6 +25,8 @@ public class User implements Parcelable {
         this.isMale = isMale;
     }
 
+    public User() {
+    }
 
     protected User(Parcel in) {
         id = in.readInt();
@@ -80,5 +82,14 @@ public class User implements Parcelable {
         dest.writeString(name);
         dest.writeByte((byte) (isMale ? 1 : 0));
 //        dest.writeParcelable(book,0);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", isMale=" + isMale +
+                '}';
     }
 }

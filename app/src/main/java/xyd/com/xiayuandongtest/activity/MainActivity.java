@@ -31,7 +31,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyd.com.xiayuandongtest.R;
 import xyd.com.xiayuandongtest.entity.User2;
+import xyd.com.xiayuandongtest.providers.ProviderActivity;
 import xyd.com.xiayuandongtest.services.MessengerService;
+import xyd.com.xiayuandongtest.tcp_service.MsgActivity;
 import xyd.com.xiayuandongtest.test.UserManager;
 import xyd.com.xiayuandongtest.utils.LogUtils;
 import xyd.com.xiayuandongtest.utils.MyUtils;
@@ -164,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
-                    MyUtils.closeOutIO(objectOutputStream);
+                    MyUtils.close(objectOutputStream);
                 }
 
 
@@ -201,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.btn_2_test1, R.id.btn_repeat,R.id.btn_bookmanager_activity})
+    @OnClick({R.id.btn_2_test1, R.id.btn_repeat,R.id.btn_bookmanager_activity,R.id.btn_start_provideractivity,R.id.btn_start_msg})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_2_test1:
@@ -212,6 +214,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_bookmanager_activity:
                 startActivity(new Intent(this, BookManagerActivity.class));
+                break;
+            case R.id.btn_start_provideractivity:
+                startActivity(new Intent(this, ProviderActivity.class));
+                break;
+            case R.id.btn_start_msg:
+                startActivity(new Intent(this, MsgActivity.class));
                 break;
 
         }

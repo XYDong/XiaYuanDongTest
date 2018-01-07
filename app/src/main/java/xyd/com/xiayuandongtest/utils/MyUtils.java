@@ -1,8 +1,13 @@
 package xyd.com.xiayuandongtest.utils;
 
+import android.app.ActivityManager;
+import android.content.Context;
+
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
 
 /**
  * 描述：
@@ -14,28 +19,34 @@ import java.io.ObjectOutputStream;
  */
 
 public class MyUtils {
-    public static void closeOutIO(ObjectOutputStream objectOutputStream) {
-        if(objectOutputStream != null){
-            try {
-                objectOutputStream.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                objectOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+    public static String getProcessName(Context cxt, int pid) {
+        ActivityManager am = (ActivityManager) cxt
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+        if (runningApps == null) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo procInfo : runningApps) {
+            if (procInfo.pid == pid) {
+                return procInfo.processName;
             }
         }
+        return null;
     }
-    public static void closeInIO(ObjectInputStream objectInputStream) {
-        if(objectInputStream != null){
-            try {
-                objectInputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+
+    public static void close(Closeable closeable) {
+        try {
+            if (closeable != null) {
+                closeable.close();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
+    public static void executeInThread(Runnable runnable) {
+        new Thread(runnable).start();
+    }
+
 
 }

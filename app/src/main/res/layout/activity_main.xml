@@ -71,4 +71,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_repeat" />
 
+    <Button
+        android:id="@+id/btn_start_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="启动msg"
+        app:layout_constraintTop_toBottomOf="@+id/btn_start_provideractivity"
+        tools:layout_editor_absoluteX="148dp" />
+
 </android.support.constraint.ConstraintLayout>

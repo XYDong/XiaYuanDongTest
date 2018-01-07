@@ -60,8 +60,10 @@
             android:permission="xyd.com.PROVIDER"
             android:process=":provider" />
 
-        <activity android:name=".activity.ProviderActivity"
-                  android:launchMode="singleTask"/>
+        <activity
+            android:name=".providers.ProviderActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".tcp_service.MsgActivity"></activity>
     </application>
 
 </manifest>
