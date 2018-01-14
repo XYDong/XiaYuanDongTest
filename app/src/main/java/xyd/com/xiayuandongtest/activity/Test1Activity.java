@@ -68,7 +68,7 @@ public class Test1Activity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }finally {
-                    MyUtils.closeInIO(inputStream);
+                    MyUtils.close(inputStream);
                 }
 
 

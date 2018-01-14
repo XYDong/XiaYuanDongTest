@@ -59,6 +59,7 @@ public class TCPService extends Service {
             ServerSocket serverSocket = null;
             try {
                 serverSocket = new ServerSocket(port);
+                System.out.println("tcpservice start");
             } catch (IOException e) {
                 System.out.println("establelish tcp server failed, port :" + port);
                 e.printStackTrace();
@@ -77,12 +78,8 @@ public class TCPService extends Service {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-
-
                         }
                     }.start();
-
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
