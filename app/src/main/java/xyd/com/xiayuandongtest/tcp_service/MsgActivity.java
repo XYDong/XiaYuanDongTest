@@ -1,5 +1,6 @@
 package xyd.com.xiayuandongtest.tcp_service;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,9 +20,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
 import java.net.Socket;
+import java.net.SocketException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import butterknife.BindView;
@@ -65,7 +72,8 @@ public class MsgActivity extends Activity {
         Socket socket = null;
         while(socket == null){
             try {
-                socket = new Socket("localhost", 8869);
+                socket = new Socket();
+                socket.connect(new InetSocketAddress("localhost",8688),20000);
                 mClientSocket = socket;
                 printWriter = new PrintWriter(
                         new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
@@ -79,7 +87,7 @@ public class MsgActivity extends Activity {
         }
 
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mClientSocket.getInputStream()));
             while (!MsgActivity.this.isFinishing()){
                 String readLine = bufferedReader.readLine();
                 System.out.println("receive:"+readLine);
@@ -108,8 +116,15 @@ public class MsgActivity extends Activity {
     @OnClick(R.id.btn_send)
     public void onViewClicked() {
         String body = etBody.getText().toString();
-        if(!TextUtils.isEmpty(body)){
-            printWriter.println(body);
+        if(!TextUtils.isEmpty(body) && printWriter != null){
+//            printWriter.println(body);
+
+            new Thread(){
+                @Override
+                public void run() {
+                    printWriter.println(body);
+                }
+            }.start();
             etBody.setText("");
             String time = formatDateTime(System.currentTimeMillis());
             String showMsg = "self" + time + " : " + body + "\n";
@@ -147,6 +162,32 @@ public class MsgActivity extends Activity {
                 }
             }
         }
+    }
+
+
+    /**
+     * 获取Android本机IP地址
+     *
+     * @return
+     */
+    @SuppressLint("LongLogTag")
+    private String getLocalIpAddress() {
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface
+                    .getNetworkInterfaces(); en.hasMoreElements();) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf
+                        .getInetAddresses(); enumIpAddr.hasMoreElements();) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress()) {
+                        return inetAddress.getHostAddress().toString();
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+            Log.e("WifiPreference IpAddress", ex.toString());
+        }
+        return null;
     }
 
 }

@@ -24,7 +24,7 @@ import xyd.com.xiayuandongtest.utils.MyUtils;
 public class TCPService extends Service {
 
     public static final String TAG = "TCPService";
-    public static final int port = 8869;
+    public static final int port = 8688;
     private boolean mIsServiceDestoryed = false;
     private String[] mDefinedMessages = new String[]{
             "你好啊，哈哈",
