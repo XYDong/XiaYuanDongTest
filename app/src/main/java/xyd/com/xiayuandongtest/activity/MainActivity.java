@@ -32,6 +32,7 @@ import butterknife.OnClick;
 import xyd.com.xiayuandongtest.R;
 import xyd.com.xiayuandongtest.entity.User2;
 import xyd.com.xiayuandongtest.providers.ProviderActivity;
+import xyd.com.xiayuandongtest.services.BookManagerActivity;
 import xyd.com.xiayuandongtest.services.MessengerService;
 import xyd.com.xiayuandongtest.tcp_service.MsgActivity;
 import xyd.com.xiayuandongtest.test.UserManager;

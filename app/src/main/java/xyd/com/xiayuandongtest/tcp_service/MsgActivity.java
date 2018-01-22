@@ -204,4 +204,16 @@ public class MsgActivity extends Activity {
         return null;
     }
 
+    @Override
+    protected void onDestroy() {
+        if(mClientSocket != null){
+            try {
+                mClientSocket.shutdownInput();
+                mClientSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        super.onDestroy();
+    }
 }

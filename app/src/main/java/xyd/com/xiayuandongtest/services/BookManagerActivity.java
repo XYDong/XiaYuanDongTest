@@ -1,4 +1,4 @@
-package xyd.com.xiayuandongtest.activity;
+package xyd.com.xiayuandongtest.services;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -18,7 +18,6 @@ import xyd.com.xiayuandongtest.IBookManager;
 import xyd.com.xiayuandongtest.IOnNewBookArrivedListener;
 import xyd.com.xiayuandongtest.R;
 import xyd.com.xiayuandongtest.entity.Book;
-import xyd.com.xiayuandongtest.services.BookManagerService;
 import xyd.com.xiayuandongtest.utils.LogUtils;
 
 public class BookManagerActivity extends Activity {

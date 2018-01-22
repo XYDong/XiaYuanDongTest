@@ -54,7 +54,7 @@
             android:name=".services.BookManagerService"
             android:process=":remote" />
 
-        <activity android:name=".activity.BookManagerActivity" />
+        <activity android:name=".services.BookManagerActivity" />
 
         <provider
             android:name=".providers.BookProvider"
