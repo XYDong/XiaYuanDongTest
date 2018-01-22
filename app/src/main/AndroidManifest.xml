@@ -65,7 +65,7 @@
         <activity
             android:name=".providers.ProviderActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".tcp_service.MsgActivity"></activity>
+        <activity android:name=".tcp_service.MsgActivity"/>
 
         <service android:name=".tcp_service.TCPService"
             android:process=":remote"/>

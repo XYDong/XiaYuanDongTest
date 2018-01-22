@@ -48,7 +48,7 @@ public class TCPService extends Service {
 
     @Override
     public void onDestroy() {
-        mIsServiceDestoryed = false;
+        mIsServiceDestoryed = true;
         super.onDestroy();
     }
 
@@ -104,6 +104,7 @@ public class TCPService extends Service {
 
                 int nextInt = new Random().nextInt(mDefinedMessages.length);
                 String msg = mDefinedMessages[nextInt];
+                printWriter.println(msg);
                 System.out.println("msg : " + msg);
             }
             System.out.println("clent quit.");

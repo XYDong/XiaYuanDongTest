@@ -9,6 +9,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -87,7 +88,7 @@ public class MsgActivity extends Activity {
         }
 
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mClientSocket.getInputStream()));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             while (!MsgActivity.this.isFinishing()){
                 String readLine = bufferedReader.readLine();
                 System.out.println("receive:"+readLine);
@@ -114,22 +115,35 @@ public class MsgActivity extends Activity {
 
 
     @OnClick(R.id.btn_send)
-    public void onViewClicked() {
-        String body = etBody.getText().toString();
-        if(!TextUtils.isEmpty(body) && printWriter != null){
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_send:
+                System.out.println("btn_send");
+                String body = etBody.getText().toString();
+                if(!TextUtils.isEmpty(body) && printWriter != null){
 //            printWriter.println(body);
 
-            new Thread(){
-                @Override
-                public void run() {
-                    printWriter.println(body);
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            printWriter.println(body);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    etBody.setText("");
+                                    String time = formatDateTime(System.currentTimeMillis());
+                                    String showMsg = "self" + time + " : " + body + "\n";
+                                    tvMsg.setText(tvMsg.getText() + showMsg);
+                                }
+                            });
+                        }
+                    }.start();
+
                 }
-            }.start();
-            etBody.setText("");
-            String time = formatDateTime(System.currentTimeMillis());
-            String showMsg = "self" + time + " : " + body + "\n";
-            tvMsg.setText(tvMsg.getText() + showMsg);
+
+                break;
         }
+
 
     }
 
