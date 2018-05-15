@@ -4,7 +4,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "26.0.2"
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "xyd.com.xiayuandongtest"
         minSdkVersion 15
@@ -21,8 +21,8 @@ android {
 
         manifestPlaceholders = [
 
-                XG_ACCESS_ID:"2100278393",
-                XG_ACCESS_KEY : "A5N24PE8TY8A",
+                XG_ACCESS_ID : "2100278393",
+                XG_ACCESS_KEY: "A5N24PE8TY8A",
         ]
     }
     buildTypes {
@@ -67,7 +67,10 @@ dependencies {
 //mid包
     compile 'com.tencent.mid:mid:4.0.6-release'
 
+    //动画兼容库
+    compile 'com.daimajia.easing:library:2.0@aar'
+    compile 'com.daimajia.androidanimations:library:2.3@aar'
+
 
 }
 println "app end"
-

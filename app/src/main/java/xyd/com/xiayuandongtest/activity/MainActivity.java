@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     Button btn2Test1;
     @BindView(R.id.btn_repeat)
     Button btnRepeat;
+    @BindView(R.id.btn_step)
+    Button btnStep;
     public static final String TAG = "xyd.mainactivity";
     @BindView(R.id.btn_bookmanager_activity)
     Button btnBookmanagerActivity;
@@ -204,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.btn_2_test1, R.id.btn_repeat,R.id.btn_bookmanager_activity,R.id.btn_start_provideractivity,R.id.btn_start_msg})
+    @OnClick({R.id.btn_2_test1, R.id.btn_repeat,R.id.btn_bookmanager_activity,R.id.btn_start_provideractivity,R.id.btn_start_msg,R.id.btn_step})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_2_test1:
@@ -221,6 +223,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_start_msg:
                 startActivity(new Intent(this, MsgActivity.class));
+                break;
+            case R.id.btn_step:
+                startActivity(new Intent(this, CustomActivity.class));
                 break;
 
         }
