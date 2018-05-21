@@ -7,11 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyd.com.xiayuandongtest.R;
-import xyd.com.xiayuandongtest.utils.LogUtils;
 
 public class Test2Activity extends AppCompatActivity {
 

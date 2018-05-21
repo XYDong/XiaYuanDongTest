@@ -6,10 +6,11 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import xyd.com.xiayuandongtest.R;
 import xyd.com.xiayuandongtest.entity.Book;
 import xyd.com.xiayuandongtest.entity.User;
-import xyd.com.xiayuandongtest.utils.LogUtils;
 
 public class ProviderActivity extends Activity {
     public static final String AUTHORITY = "xyd.com.xiayuandongtest.providers";

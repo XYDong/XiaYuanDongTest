@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
@@ -15,10 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyd.com.xiayuandongtest.R;
-import xyd.com.xiayuandongtest.entity.User;
 import xyd.com.xiayuandongtest.entity.User2;
 import xyd.com.xiayuandongtest.test.UserManager;
-import xyd.com.xiayuandongtest.utils.LogUtils;
 import xyd.com.xiayuandongtest.utils.MyUtils;
 
 import static xyd.com.xiayuandongtest.utils.Constants.CACHE_FILE_PATH;

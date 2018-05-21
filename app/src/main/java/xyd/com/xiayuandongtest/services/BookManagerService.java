@@ -4,12 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Build;
 import android.os.IBinder;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
+
+import com.blankj.utilcode.util.LogUtils;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -18,7 +18,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import xyd.com.xiayuandongtest.IBookManager;
 import xyd.com.xiayuandongtest.IOnNewBookArrivedListener;
 import xyd.com.xiayuandongtest.entity.Book;
-import xyd.com.xiayuandongtest.utils.LogUtils;
 
 /**
  * Created by Administrator on 2017/12/25.

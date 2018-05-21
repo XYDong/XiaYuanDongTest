@@ -1,3 +1,3 @@
 println "setting start"
-include ':app'
+include ':app', ':xlib'
 println "setting end"

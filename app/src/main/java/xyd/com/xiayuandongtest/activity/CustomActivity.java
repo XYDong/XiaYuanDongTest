@@ -21,8 +21,6 @@ public class CustomActivity extends AppCompatActivity {
 
     @BindView(R.id.button)
     Button button;
-    @BindView(R.id.rl_stepview)
-    RelativeLayout rlStep;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,6 @@ public class CustomActivity extends AppCompatActivity {
         stepBeans.add(stepBean2);
         stepBeans.add(stepBean3);
         stepView.setStepNum(stepBeans);
-        rlStep.addView(stepView);
 
     }
 }

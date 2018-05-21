@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 
@@ -36,7 +37,6 @@ import xyd.com.xiayuandongtest.services.BookManagerActivity;
 import xyd.com.xiayuandongtest.services.MessengerService;
 import xyd.com.xiayuandongtest.tcp_service.MsgActivity;
 import xyd.com.xiayuandongtest.test.UserManager;
-import xyd.com.xiayuandongtest.utils.LogUtils;
 import xyd.com.xiayuandongtest.utils.MyUtils;
 
 import static xyd.com.xiayuandongtest.utils.Constants.CACHE_FILE_PATH;
@@ -52,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
     Button btnRepeat;
     @BindView(R.id.btn_step)
     Button btnStep;
+    @BindView(R.id.btn_test_service)
+    Button btn_test_service;
+    @BindView(R.id.btn_test_rxandroid)
+    Button btn_test_rxandroid;
     public static final String TAG = "xyd.mainactivity";
     @BindView(R.id.btn_bookmanager_activity)
     Button btnBookmanagerActivity;
@@ -206,7 +210,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.btn_2_test1, R.id.btn_repeat,R.id.btn_bookmanager_activity,R.id.btn_start_provideractivity,R.id.btn_start_msg,R.id.btn_step})
+    @OnClick({R.id.btn_2_test1, R.id.btn_repeat,R.id.btn_bookmanager_activity,R.id.btn_start_provideractivity,
+            R.id.btn_start_msg,R.id.btn_step,R.id.btn_test_service,R.id.btn_test_rxandroid})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_2_test1:
@@ -226,6 +231,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_step:
                 startActivity(new Intent(this, CustomActivity.class));
+                break;
+            case R.id.btn_test_service:
+                startActivity(new Intent(this, ServiceTestActivity.class));
+                break;
+            case R.id.btn_test_rxandroid:
+                startActivity(new Intent(this, RxAndroidActivity.class));
                 break;
 
         }

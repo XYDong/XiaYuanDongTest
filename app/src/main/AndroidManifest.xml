@@ -71,7 +71,13 @@
             android:name=".tcp_service.TCPService"
             android:process=":remote" />
 
-        <activity android:name=".activity.CustomActivity"></activity>
+        <activity android:name=".activity.CustomActivity" />
+        <activity android:name=".activity.ServiceTestActivity" />
+
+        <service android:name=".services.BindTestService" />
+        <service android:name=".services.StartTestService" />
+
+        <activity android:name=".activity.RxAndroidActivity"></activity>
     </application>
 
 </manifest>

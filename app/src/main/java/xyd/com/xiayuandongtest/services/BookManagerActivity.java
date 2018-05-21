@@ -12,13 +12,14 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import java.util.List;
 
 import xyd.com.xiayuandongtest.IBookManager;
 import xyd.com.xiayuandongtest.IOnNewBookArrivedListener;
 import xyd.com.xiayuandongtest.R;
 import xyd.com.xiayuandongtest.entity.Book;
-import xyd.com.xiayuandongtest.utils.LogUtils;
 
 public class BookManagerActivity extends Activity {
 

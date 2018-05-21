@@ -42,7 +42,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -51,26 +51,24 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
     compile 'com.yanzhenjie:permission:1.1.2'
     compile 'com.android.support:design:25.3.1'
-
     //完整的信鸽依赖三个都必须有，如果发生依赖冲突请根据对应的依赖版本号选择高版本的依赖。（使用jcenter自动接入请确认libs 中没有信鸽的相关jar包）
-
-//信鸽3.2.2 release版本
-//完整的信鸽依赖三个都必须有，如果发生依赖冲突请根据对应的依赖版本号选择高版本的依赖。（使用jcenter自动接入请                    确认libs 中没有信鸽的相关jar包）
-
-//信鸽jar
+    //信鸽3.2.2 release版本
+    //完整的信鸽依赖三个都必须有，如果发生依赖冲突请根据对应的依赖版本号选择高版本的依赖。（使用jcenter自动接入请                    确认libs 中没有信鸽的相关jar包）
+    //信鸽jar
     compile 'com.tencent.xinge:xinge:3.2.2-release'
-//wup包
+    //wup包
     compile 'com.tencent.wup:wup:1.0.0.E-release'
-//mid包
+    //mid包
     compile 'com.tencent.mid:mid:4.0.6-release'
-
     //动画兼容库
     compile 'com.daimajia.easing:library:2.0@aar'
     compile 'com.daimajia.androidanimations:library:2.3@aar'
-
-
+    implementation 'com.blankj:utilcode:1.15.1'
+//    implementation 'io.reactivex:rxandroid:1.2.1'
+//    implementation 'io.reactivex:rxjava:1.1.6'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.14-RC1'
 }
 println "app end"

@@ -6,13 +6,13 @@ import android.content.Context;
 import android.os.Process;
 import android.util.Log;
 
+import com.blankj.utilcode.util.Utils;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 
 import java.util.List;
 
-import xyd.com.xiayuandongtest.utils.Utils;
 
 /**
  * 描述：
