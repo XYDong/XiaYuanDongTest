@@ -77,7 +77,8 @@
         <service android:name=".services.BindTestService" />
         <service android:name=".services.StartTestService" />
 
-        <activity android:name=".activity.RxAndroidActivity"></activity>
+        <activity android:name=".activity.RxAndroidActivity" />
+        <activity android:name=".imageloader.ImageLoaderActivity"></activity>
     </application>
 
 </manifest>
